@@ -17,7 +17,7 @@ Needed for installation:
 </ul>
 
 
-### Installing
+## Deployment
 
 How to use run the player in Apache Tomcat:
 
