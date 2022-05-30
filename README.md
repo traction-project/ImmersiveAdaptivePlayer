@@ -9,15 +9,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 The documentation is available here: https://traction-project.github.io/ImmersiveAdaptivePlayer
 
+
+## Deployment
+
 Needed for installation:
 
 <ul>
     <li> Apache Tomcat </li>
     <li> Apache HTTP Server for DASH content </li>
 </ul>
-
-
-## Deployment
 
 How to use run the player in Apache Tomcat:
 
