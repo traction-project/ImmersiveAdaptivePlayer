@@ -18,12 +18,13 @@ Needed for installation:
     <li>Apache Tomcat</li>
 </ul>
 
-How to use run the player in Apache Tomcat (some steps may vary using XAMPP for Windows):
+How to use run the player with Apache Tomcat (some steps and directories may vary using XAMPP for Windows):
 
 * Run C:\apache-tomcat\bin\startup.bat
 * Open C:\apache-tomcat\webapps folder
-* Copy the ImmersiveAdaptivePlayer folder into webapps folder
-* Open a browser and type: "your_apache_server_address:portnumber"/ImmersiveAdaptivePlayer/
+* Copy the ImmersiveAdaptivePlayer folder into webapps folder (make sure the folder is named ImmersiveAdaptivePlayer, with no other characters and respecting the letters in capital)
+* Your directory must be webapps\ImmersiveAdaptivePlayer\all-folders-files. Make sure there is not a subfolder also called ImmersiveAdaptivePlayer.
+* Open a browser and type: "your_apache_server_address:portnumber"/ImmersiveAdaptivePlayer/ (portnumber is usually 8080 with Tomcat)
 
 
 ## Built With
