@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<title>TRACTION Player</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/index.css">
+
+	<link rel="preload" href="./css/fonts/Roboto-MediumItalic.ttf" as="font" crossorigin="anonymous">
+
+	<script src="./js/lib/jquery-3.2.1.min.js"></script>
+	<script src="./js/lib/bootstrap.min.js"></script>
+
+	<script src="./js/lib/hls.js"></script>
+
+	<script src="./js/lib/three.js"></script>
+	<script src="./js/lib/reticulum.js"></script>
+	<!--script src="js/lib/StereoEffect.js"></script-->
+	<script src="./js/lib/omnitone_i2cat.js"></script>
+	<script src="./js/lib/webvr-polyfill.js"></script>
+	<script src="./js/lib/bogJS-latest.js"></script>
+	<script src="./js/lib/sax.js"></script>
+    <script src="./js/lib/imsc_i2cat.js"></script>
+    <script src="./js/lib/dash.all.min.js"></script>
+    <script src="./js/lib/responsive_Subs.js"></script>
+    <script src="./js/lib/socket.io.js"></script>
+    <script src="./js/lib/milog.js"></script>
+
+    <!--script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script-->
+
+	<script src="./js/Scene_Generators/MediaObjectData.js"></script>
+	<script src="./js/Scene_Generators/VideoController.js"></script>
+	<script src="./js/Scene_Generators/ManifestParser.js"></script>
+	<script src="./js/Scene_Generators/Radar.js"></script>
+
+<!--MENU MANAGER -->
+	<script src="./js/Managers/ViewStructureMenuManager.js"></script>
+	<script src="./js/Managers/AplicationManager.js"></script>
+	<script src="./js/Managers/AudioManager.js"></script>
+	<script src="./js/Managers/MenuManager.js"></script>
+	<script src="./js/Managers/CanvasManager.js"></script>
+	<script src="./js/Managers/MenuFunctionsManager.js"></script>
+	<script src="./js/Managers/MenuDictionary.js"></script>
+	<script src="./js/Managers/InteractionsController.js"></script>
+	<script src="./js/Managers/SubSignManager.js"></script>
+	<script src="./js/Managers/STManager.js"></script>
+	<script src="./js/Managers/SLManager.js"></script>
+
+	<script src="./js/Controllers/DeviceOrientationAndTouchController.js"></script>
+	<script src="./js/Controllers/FullScreenController.js"></script>
+	<script src="./js/Controllers/VRController.js"></script>
+
+	<script src="./js/Utils/logger.js"></script>
+	<script src="./js/Utils/utils.js"></script>
+	<script src="./js/Utils/ImacController.js"></script>
+	<script src="./js/Utils/SyncController.js"></script>
+	<script src="./js/Utils/Clock.js"></script>
+
+<!--MENU MODELS -->
+	<script src="./js/Models/InteractiveElementModel.js"></script>
+	<script src="./js/Models/MainMenuModel.js"></script>
+	<script src="./js/Models/SettingsOptionMenuModel.js"></script>
+
+<!--MENU VIEWS -->
+	<script src="./js/Views/PlayPauseMenuView.js"></script>
+	<script src="./js/Views/VolumeMenuView.js"></script>
+	<script src="./js/Views/SettingsMenuView.js"></script>
+	<script src="./js/Views/AccessibilityOptionsMenuView.js"></script>
+	<script src="./js/Views/SettingsOptionMenuView.js"></script>
+	<script src="./js/Views/VideoProgressBarView.js"></script>
+
+<!--MENU CONTROLLERS -->
+	<script src="./js/Controllers/MainMenuController.js"></script>
+	<script src="./js/Controllers/SettingsOptionMenuController.js"></script>
+
+	<script src="./js/Utils/SettingsMenuStructure.js"></script>
+	
+	<script src="./js/pilot1.js"></script>
+	<script src="./js/index.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117913371-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-117913371-1', {
+	  	cookie_expires: 604800, // 7 days
+	  	'anonymize_ip': true
+	  });
+	</script>
+
+</head>
+
+<body onload="showPopup()" id="body-container">
+
+	<div id="container"></div>
+	<canvas id="canvas" style="display: contents;"></canvas>
+	<canvas id="canvas2" style="display: contents;"></canvas>
+
+	<!--div class="popupclass" id="mainpopup">
+		<div class="container">
+			<div class="popuptextbox">
+				<p><b>Hinweise zum Datenschutz</b></p>
+				<p>Stand 20.01.2020</p>
+				<p><b>Kontaktdaten des Verantwortlichen</b><br>Verantwortlicher im Sinne der EU-Datenschutz-Grundverordnung (DSGVO) sind:</p>
+				<p>
+					Rundfunk Berlin-Brandenburg (rbb)<br>
+					vertreten durch die Intendantin<br>
+					Anstalt des öffentlichen Rechts<br>
+					Masurenallee 8-14<br>
+					14057 Berlin<br>
+				</p>
+				<p>und</p>
+				<p>
+					i2CAT<br>
+					Calle Gran Capita 2-4<br>
+					Edifici Nexus I<br>
+					08034 Barcelona<br>
+					Spain<br>
+				</p>
+				<p>Die Verantwortlichen haben einen Joint Controller Vertrag im Sinne von Artikel 26 Absatz 1 EU-DSGVO abgeschlossen. Danach ist der Rundfunk Berlin-Brandenburg Federführer und dazu verpflichtet allen Informations- und Auskunftspflichten gemäß Artikel 13 und 14 EU-DSGVO nachzukommen.</p>
+				<br>
+				<p><b>Kontaktdaten der Datenschutzbeauftragten</b></p>
+				<p>
+					Datenschutzbeauftragte des rbb ist:<br>
+					Anke Naujock-Simon<br>
+					Masurenallee 8-14<br>
+					14057 Berlin<br>
+					Telefon: 030/9799360400<br>
+					E-Mail: Datenschutz@rbb-online.de<br>
+				</p>
+				<br>
+				<p><b>Verarbeitung personenbezogener Daten</b></p>
+				<p>Generell werden die personenbezogenen Daten der Nutzer nur verwendet, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie der Inhalte und Leistungen erforderlich ist.</p>
+				<p>Für dieses Angebot nutzen die rbb Innovationsprojekte den ImAc Player. Dieser wurde im EU- Projekt ImAc (Immersive Accessibility) vom Forschungsinstitut i2CAT (<a href="https://www.i2cat.net/#home" target="_blank">https://www.i2cat.net/#home</a>) entwickelt und tritt hier auch als technischer Betreiber auf. </p>
+				<p>Bei jedem Aufruf der Website wird die IP-Adresse vom Computersystem des aufrufenden Endgerätes übertragen, jedoch <u><b>NICHT</b></u> gespeichert oder verarbeitet.</p>
+				<p>Außerdem verwendet i2CAT Cookies. Cookies sind kleine Textdateien, die bei Aufruf einer Website vom Internetbrowser temporär auf Ihrem Endgerät gespeichert werden. i2CAT setzt sogenannte funktionale Cookies aus technischen Gründen ein, um Ihnen einen komfortablen Zugriff auf das Online-Angebot zu ermöglichen und dieses nutzerfreundlicher zu gestalten. In den Cookies werden die Einstellungen im Player Menü gespeichert, damit Sie beim erneuten Aufruf nicht noch einmal alle Einstellungen tätigen müssen. Außerdem wird eine eindeutige Zeichenfolge gespeichert, die eine Identifizierung des erneuten Zugriffs ermöglicht damit der Hilfetext vor dem Video nicht noch einmal angezeigt wird. Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung von Cookies ist Art.6 Abs.1 S. 1 lit. e) DS-GVO.</p>
+				<p>Folgende zusätzliche Daten werden mit Ihrer ausdrücklichen Einwilligung erhoben und von uns ausgewertet:</p>
+				<p>&nbsp; 1) Qualitative Parameter</p>
+				<p>Gerät wird eine zufällige ID zugewiesen (Erkennung eines neuen oder bereits erfassten Gerätes); Startverzögerung (Verzögerung seit der Auswahl des Videos und der tatsächlichen Wiedergabe); Durchsatz sprich effektive Bandbreite; Videoqualität; Puffer Auslastung; Abspielverzögerungen und Betrachtungsrichtung (Breiten- und Längengrade).</p>
+				<p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind, spätestens zum 31.03.2020.</p>
+				<p>&nbsp; 2) Nutzerverhalten</p>
+				<p>Zur Erfassung des Nutzerverhaltens im ImAc Player wird Google Analytics eingesetzt zur statistischen Erfassung.</p>
+				<p>Folgende Daten werden erhoben: Gerät wird eine zufällige ID zugewiesen (Erkennung eines neuen oder bereits erfassten Gerätes), Region und Zugriffszeit, Gerätetyp, genutzter Internet Browser, Dauer der Videowiedergabe, genutzte barrierefreie Dienste und Nutzungszeit, verwendete Einstellungen im Player Menü und verwendete Funktionen zur Steuerung des Videos (Beispiel: Play / Pause)</p>
+				<p>Die auf diese Weise erhobenen Daten werden durch technische Vorkehrungen anonymisiert. Die IP-Adresse wird von Google gekürzt verarbeitet.</p>
+				<p>Google Analytics nutzt außerdem Cookies um einen erneuten Zugriff des Internetbrowsers zu erkennen und wie schnell die Website aufgerufen wurde. Die Ablaufzeit der Cookies beträgt 7 Tage.</p>
+				<p>Im Auftrag von i2CAT wird Google diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Webseiten-Aktivitäten zusammenzustellen. i2CAT hat mit Google einen Vertrag zur Auftragsverarbeitung abgeschlossen. </p>
+				<p>Die statistischen Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind, spätestens zum 31.03.2020.</p>
+				<br>	
+				<p><b>Ihre Rechte</b></p>
+				<p>Sie haben das Recht, Ihre Einwilligung zur Auswertung ihrer Nutzerdaten jederzeit zu widerrufen. In diesem Fall werden Ihre Daten unverzüglich gelöscht.</p>
+				<p>Bitte richten Sie Ihren Widerruf an innovationsprojekte@rbb-online.de. Dann erhalten Sie eine Bestätigungs-E-Mail über die Löschung Ihrer Angaben.</p>
+				<p>Sie haben überdies das Recht auf Auskunft, Löschung und Einschränkung der Verarbeitung der Daten. Bitte wenden Sie sich in diesem Fall an <a href="innovationsprojekte@rbb-online.de" target="_blank">innovationsprojekte@rbb-online.de</a>.</p>
+				<p>Wenn Sie der Ansicht sind, dass Sie bei der Verarbeitung der Sie betreffenden Daten in Ihren schutzwürdigen Interessen verletzt sind, steht Ihnen das Recht auf Beschwerde zu. Wenden Sie sich in diesem Fall an die rbb-Datenschutzbeauftragte oder an die zuständige Aufsichtsbehörde (Berliner Beauftragte für Datenschutz und Informationsfreiheit, Kontakt: <a href="https://www.datenschutz-berlin.de/kontakt.html" target="_blank">https://www.datenschutz-berlin.de/kontakt.html</a>.)</p>
+				<p>Sie können sich auch an die zuständige Aufsichtsbehörde für i2CAT wenden (Catalan Data Protection Authority, <a href="https://apdcat.gencat.cat/en/inici/" target="_blank">https://apdcat.gencat.cat/en/inici/</a>, apdcat@gencat.cat).</p>
+				<br>
+				<p><b>Sind Sie mit der Erhebung der Daten einverstanden? Sie können sich die Videos auch anschauen, wenn Sie sich gegen eine Erfassung entscheiden.</b></p>
+				<br>
+			</div>
+			<div class="popupbuttons">
+				<button type="button" class="btn btn-primary" id="popupbutton1" style="width: 70px; margin: 1rem">Ja</button>
+				<button type="button" class="btn btn-primary" id="popupbutton2" style="width: 70px; margin: 1rem">Nein</button>
+			</div>
+		</div>
+	</div-->
+
+</body>
+</html>

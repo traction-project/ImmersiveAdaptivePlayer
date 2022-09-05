@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>TRACTION Player</title>
+	<meta charset="utf-8">
+	<!--meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no"-->
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+
+	<!--Font Roboto-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<!--Open Sans-->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="./portal/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./portal/css/bootstrap340.min.css">
+	<link rel="stylesheet" href="./portal/css/index.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="./portal/css/bootstrap-select.min.css">
+
+
+	<!-- JavaScript -->
+	<script src="./portal/js/lib/jquery-3.2.1.min.js"></script>
+	<script src="./portal/js/lib/bootstrap.min.js"></script>	
+	<script src="./portal/js/lib/socket.io.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="./portal/js/lib/bootstrap-select.min.js"></script>
+
+
+	<script src="./portal/js/index.js"></script>
+	<script src="./portal/js/constants.js"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117913371-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-117913371-1', {
+	  	cookie_expires: 604800, // 7 days
+	  	'anonymize_ip': true
+	  });
+	</script>
+
+</head>
+
+<body onload="init_webplayer()">
+
+	<!-- Header -->
+	<div class="TopBar">
+    	<div class="TopBar-container container">
+    		<!-- ImAc Logo -->
+	    	<a href="./">
+				<img class="TopBar-image" src="./portal/img/LOGO-TRACTION.png" alt="logo ImAc">
+			</a>
+			<!-- Language selector -->
+			<div id="topbar_lang" class="TopBar-options large">
+	      		<select id="langSelector" class="selectpicker" data-width="100%" data-style="TopBar-btn">
+					<option value="en">English (UK)</option>
+				  	<option value="es">Español (Esp)</option>
+				  	<option value="de">Deutsch (De)</option>
+				  	<option value="ca">Català (Cat)</option>
+				</select> 
+			</div>
+			<!-- Settings button -->
+			<div id="topbar_settings" class="TopBar-options large" onclick="settingsFunc()">
+				<img src="./portal/img/settings_c.png" tabindex="0" alt="settings icon">
+				<span id="span_1">Settings</span>
+      		</div>
+
+    	</div>
+  	</div>
+  	<!-- Body -->
+	<section class="container">
+		<!-- Poster section -->
+		<div id="poster_container" class="Poster-container">
+			<img id="content_poster" class="Poster-image" src="./portal/img/white_bkgd.png" alt="">
+			<div class="Poster-info">
+				<img title="Logo" src="./portal/img/LOGO-TRACTION-small.png" alt="logo">
+				<h1><span id="content_title">TRACTION Player</span></h1>
+				<div class="container-12">
+					<div id="content_access" class="Content-access">
+						<img title="Subtitles" src="./portal/img/150ppp/black_st_off.png" alt="ST">
+						<img title="Sign language" src="./portal/img/150ppp/black_sl_off.png" alt="SL">
+						<img title="Audio description" src="./portal/img/150ppp/black_ad_off.png" alt="AD">
+						<img title="Audio subtitles" src="./portal/img/150ppp/black_ast_off.png" alt="AST">
+					</div>
+					<div class="Content-access">
+						<p><span id="content_lang"> </span></p>
+					</div>
+				</div>
+				
+				<!--<p><span id="content_desc"> Enjoy immersive contents with access services by selecting the video you want to watch. To customise your experience, go into settings or select a video and then go to the player menu.</span></p>
+			    -->			
+				<p><span id="content_desc">TRACTION Project's Immersive opera player. Customise your experience in settings. Select any 360&#xb0; video below for playback.</span></p>
+			    
+			</div>
+
+			<!-- Second Screen section -->
+			<div id="ss_container" class="SS-container" style="visibility: hidden;">
+				<div class="container-12 Settings-tittle">
+	          		<div class="Settings-option small">
+						<span id="span_s1">&nbsp;  Multi-Screen Panel</span>
+						<!--img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close"-->
+					</div>
+	          	</div>
+				<div class="container-12" id="input_room_box">
+					<div class="SS-input-group center">
+						<input type="text" class="form-control dark" placeholder="Indicate Session ID"  id="sessionUUID">
+					</div>
+				</div>
+				<div class="container-6" id="button_room_box1">
+					<div class="SS-button-container center">
+						<button class="btn btn-SS" onclick="createSessionByID()"><span id="span_s2"> Create</span></button>
+					</div>
+				</div>
+				<div class="container-6" id="button_room_box2">
+					<div class="SS-button-container center">
+						<button class="btn btn-SS" onclick="joinSessionByID()"><span id="span_s3"> Join</span></button>
+					</div>
+	      		</div>
+	        </div>
+
+	        <!-- Second Screen section -->
+			<div id="roomIDdiv" class="SS-container2">
+	          	<div class="container-12">
+					<div class="SS-input-group output">
+						<span class="RoomID-container" id="span_s0"></span>
+					</div>
+				</div>
+	        </div>
+
+			
+			<!-- Play button -->
+			<div id="play_poster_btn" class="Poster-play">
+				<div class="Poster-play-btn" onclick="playContent()">
+	  				<img src="./portal/img/img_play_button_u72_c.png" tabindex="0" alt="">
+	  				<span>Play&nbsp;</span>	
+	      		</div>
+	        </div>
+		</div>
+		<!-- Gradient up -->
+		<div class="Gradient-container">
+			<img class="Poster-image Gradient-up" src="./portal/img/white_bkgd.png" alt="">
+		</div>
+		<!-- Gradient down -->
+		<div class="Gradient-container">
+			<img class="Poster-image Gradient-down" src="./portal/img/white_bkgd.png" alt="">
+		</div>
+		<!-- togle button container -->
+		<div class="Toggle-container container-12">
+			<div class="Toggle-options" onclick="toggleInfo()">
+				<span id="span_3">Show/Hide content info &nbsp;</span>
+      			<label class="switch">
+  					<input id="togglebutton" type="checkbox" checked>
+  					<span class="slider round"></span>
+				</label>
+			</div>
+		</div>
+		<!-- Content list container -->
+		<div class="Content-container container-12">
+			<div id="list_group"></div>
+		</div>
+
+		<!-- Filter Menu Box -->
+      	<div id="u109" class="Menu-filter" style="visibility: hidden;">
+          <img id="u109_img" src="./portal/img/settings/filter_menu_box.png" alt="">
+        </div>
+        <div id="u109_options" class="Menu-filter options" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenus()">
+					<span id="span_4">&nbsp;  Search</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12 Search-container">
+          		<div class="Settings-option">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search contents by ID"  id="search">
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="submit"  onclick="searchFuncByName()"><span class="glyphicon glyphicon-search"></span></button>
+						</div>
+					</div>
+				</div>
+          	</div>
+          	<div class="container-12 Search-container">
+          		<div class="Search-info">
+          			<p><span id="span_43"> Filter by accessibility service and language: </span></p>
+          		</div>
+          	</div>
+          	<div class="container-12 Search-container">
+          		<div class="container-6 Search-division">
+	          		<div class="container-12" style="visibility: inherit;">
+	          			<label class="check services">
+	          				<span style="display:inline-block;vertical-align:top;">
+							    <img src="./portal/img/150ppp/st_off.png" tabindex="0" alt="">
+							</span>
+							<span style="display:inline-block; width: 105px;">
+							    <span id="span_44">Subtitles</span>
+							</span>
+						    <input id="st_check" type="checkbox" name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check services">
+							<span style="display:inline-block;vertical-align:top;">
+							    <img src="./portal/img/150ppp/sl_off.png" tabindex="0" alt="">
+							</span>
+							<span style="display:inline-block; width: 105px; top: -12px; position: inherit;">
+							    <span id="span_45">Sign Language</span>
+							</span>
+						    <input id="sl_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check services">
+							<span style="display:inline-block;vertical-align:top;">
+							    <img src="./portal/img/150ppp/ad_off.png" tabindex="0" alt="">
+							</span>
+							<span style="display:inline-block; width: 105px; top: -12px; position: inherit;">
+							    <span id="span_46">Audio Description</span>
+							</span>
+						    <input id="ad_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check services">
+							<span style="display:inline-block;vertical-align:top;">
+							    <img src="./portal/img/150ppp/ast_off.png" tabindex="0" alt="">
+							</span>
+							<span style="display:inline-block; width: 105px; top: -12px; position: inherit;">
+							    <span id="span_47">Audio Subtitles</span>
+							</span>
+						    <input id="ast_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+		          	</div>
+				</div>
+				<div class="container-6 Search-division">
+	          		<div class="container-12" style="visibility: inherit;">
+	          			<label class="check ">English
+						    <input id="en_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check ">Español
+						    <input id="es_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check ">Deutsch
+						    <input id="de_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+						<label class="check ">Català
+						    <input id="ca_check" type="checkbox"  name="is_name" onclick="filterFunc()">
+						  	<span class="checkmark"></span>
+						</label>
+		          	</div>
+				</div>
+          	</div> 
+          	<div class="container-12 Search-container">
+          		<div class="Search-info Search-button">
+          			<button class="gobutton" onclick="closeSettingsMenus()"> <span id="span_49">Go! </span> </button>
+          		</div>
+          	</div>	
+        </div>
+
+		<!-- Background Settings -->
+		<div id="u110" style="visibility: hidden;">
+        	<div id="u110_div" class="Settings-backDiv"></div>
+      	</div>
+      	<!-- Menu Settings level 1 -->
+      	<div id="u112" class="Menu-settings" style="visibility: hidden;">
+          <img id="u112_img" src="./portal/img/settings/menu_box_u112.png" alt="">
+        </div>
+        <div id="u112_options" class="Menu-settings options" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenus()">
+					<span id="span_5">&nbsp;  Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(0)">
+	          		<img src="./portal/img/settings/settings.png" tabindex="0" alt="">
+					<span id="span_6">&nbsp;   General Settings</span>
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(1)">
+	          		<img src="./portal/img/150ppp/accessibility_icon.png" tabindex="0" alt="">
+					<span id="span_7">&nbsp;   Access Settings</span>
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(2)">
+	          		<img src="./portal/img/150ppp/st_off.png" tabindex="0" alt="">
+					<span id="span_8">&nbsp;   ST Settings</span>
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(3)">
+	          		<img src="./portal/img/150ppp/sl_off.png" tabindex="0" alt="">
+					<span id="span_9">&nbsp;   SL Settings</span>
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(5)">
+	          		<img src="./portal/img/150ppp/ad_off.png" tabindex="0" alt="">
+					<span id="span_10">&nbsp;   AD Settings</span>
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="Settings-option selectable" onclick="openSettingsMenu2(4)">
+	          		<img src="./portal/img/150ppp/ast_off.png" tabindex="0" alt="">
+					<span id="span_11">&nbsp;   AST Settings</span>
+				</div>
+          	</div>   	
+        </div>
+        <!-- Menu Settings level 2 -->
+        <div id="u113" class="Menu-settings large" style="visibility: hidden;">
+          <img id="u113_img" src="./portal/img/settings/lvl2/menu_box_2_u113_c.png" alt="">
+        </div>
+        <div id="u113_options0" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(0)">
+					<span id="span_12">&nbsp;  General Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div id="u114L" class="container-6 Settings-division">
+	          		<div id="settingslvl3_0" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div id="u114R" class="container-6 enabled">
+	          		<div class="container-12">
+		          		<div id="lvl2option00" class="Settings-option selectable" onclick="createMenuType()">
+			          		<img src="./portal/img/150ppp/menu_type.png" tabindex="0" alt="">
+							<span id="span_13">&nbsp;   Menu Type</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option01" class="Settings-option selectable" onclick="createPointerSize()">
+			          		<img src="./portal/img/150ppp/pointer_size.png" tabindex="0" alt="">
+							<span id="span_14">&nbsp;   Pointer Size</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option02" class="Settings-option selectable" onclick="createVoiceControl()">
+			          		<img src="./portal/img/150ppp/voice_control.png" tabindex="0" alt="">
+							<span id="span_15">&nbsp;   Voice Control</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option03" class="Settings-option selectable" onclick="createUserProfile()">
+			          		<img src="./portal/img/150ppp/user.png" tabindex="0" alt="">
+							<span id="span_16">&nbsp;   User Profile</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(0)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_17">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+        <div id="u113_options1" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(1)">
+					<span id="span_18">&nbsp;  Access Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="container-6 Settings-division">
+	          		<div id="settingslvl3_1" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div class="container-6">
+	          		<!--div class="container-12">
+		          		<div id="lvl2option10" class="Settings-option selectable" onclick="createAccesLang()">
+			          		<img src="./portal/img/150ppp/language.png" tabindex="0" alt="">
+							<span id="span_19">&nbsp;   Access Language</span>
+						</div>
+		          	</div-->
+		          	<div class="container-12">
+		          		<div id="lvl2option11" class="Settings-option selectable" onclick="createIndicator()">
+			          		<img src="./portal/img/150ppp/indicator.png" tabindex="0" alt="">
+							<span id="span_20">&nbsp;   Indicator</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option12" class="Settings-option selectable" onclick="createSafeArea()">
+			          		<img src="./portal/img/150ppp/safe_area.png" tabindex="0" alt="">
+							<span id="span_21">&nbsp;   Safe Area</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(1)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_22">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+        <div id="u113_options2" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(2)">
+					<span id="span_23">&nbsp;  ST Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="container-6 Settings-division">
+	          		<div id="settingslvl3_2" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div class="container-6">
+	          		<div class="container-12">
+		          		<div id="lvl2option20" class="Settings-option selectable" onclick="createSTSize()">
+			          		<img src="./portal/img/150ppp/st_font_size.png" tabindex="0" alt="">
+							<span id="span_24">&nbsp;   Size</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option21" class="Settings-option selectable" onclick="createSTBackground()">
+			          		<img src="./portal/img/150ppp/st_background.png" tabindex="0" alt="">
+							<span id="span_25">&nbsp;   Background</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option22" class="Settings-option selectable" onclick="createSTPosition()">
+			          		<img src="./portal/img/150ppp/st_position.png" tabindex="0" alt="">
+							<span id="span_26">&nbsp;   Position</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option23" class="Settings-option selectable" onclick="createSTE2r()">
+			          		<img src="./portal/img/150ppp/easy_to_read.png" tabindex="0" alt="">
+							<span id="span_27">&nbsp;   Easy to Read</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option24" class="Settings-option selectable" onclick="createSTLang()">
+			          		<img src="./portal/img/150ppp/language.png" tabindex="0" alt="">
+							<span id="span_19_1">&nbsp;   Language</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(2)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_28">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+        <div id="u113_options3" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(3)">
+					<span id="span_29">&nbsp;  SL Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="container-6 Settings-division">
+	          		<div id="settingslvl3_3" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div class="container-6">
+	          		<div class="container-12">
+		          		<div id="lvl2option30" class="Settings-option selectable" onclick="createSLSize()">
+			          		<img src="./portal/img/150ppp/sl_size.png" tabindex="0" alt="">
+							<span id="span_30">&nbsp;   Size</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option31" class="Settings-option selectable" onclick="createSLPosition()">
+			          		<img src="./portal/img/150ppp/sl_position.png" tabindex="0" alt="">
+							<span id="span_31">&nbsp;   Position</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option32" class="Settings-option selectable" onclick="createSLLang()">
+			          		<img src="./portal/img/150ppp/language.png" tabindex="0" alt="">
+							<span id="span_19_2">&nbsp;   Language</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(3)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_32">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+        <div id="u113_options4" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(4)">
+					<span id="span_33">&nbsp;  AST Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="container-6 Settings-division">
+	          		<div id="settingslvl3_4" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div class="container-6">
+	          		<div class="container-12">
+		          		<div id="lvl2option40" class="Settings-option selectable" onclick="createASTE2r()">
+			          		<img src="./portal/img/150ppp/easy_to_read.png" tabindex="0" alt="">
+							<span id="span_34">&nbsp;   Easy to Read</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option41" class="Settings-option selectable" onclick="createASTMode()">
+			          		<img src="./portal/img/150ppp/ad_presentation_mode.png" tabindex="0" alt="">
+							<span id="span_35">&nbsp;   Presentation Mode</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option42" class="Settings-option selectable" onclick="createASTVolume()">
+			          		<img src="./portal/img/150ppp/volume.png" tabindex="0" alt="">
+							<span id="span_36">&nbsp;   Volume</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option43" class="Settings-option selectable" onclick="createASTLang()">
+			          		<img src="./portal/img/150ppp/language.png" tabindex="0" alt="">
+							<span id="span_19_3">&nbsp;   Language</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(4)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_37">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+        <div id="u113_options5" class="Menu-settings options2" style="visibility: hidden;">
+        	<div class="container-12 Settings-tittle">
+          		<div class="Settings-option" onclick="closeSettingsMenu2(5)">
+					<span id="span_38">&nbsp;  AD Settings</span>
+					<img class="Settings-close" src="./portal/img/settings/close.png" tabindex="0" alt="Close">
+				</div>
+          	</div>
+          	<div class="container-12">
+          		<div class="container-6 Settings-division">
+	          		<div id="settingslvl3_5" class="container-12" style="visibility: inherit;">
+	          			<!-- Menu Settings level 3 -->
+		          	</div>
+				</div>
+				<div class="container-6">
+	          		<div class="container-12">
+		          		<div id="lvl2option50" class="Settings-option selectable" onclick="createADMode()">
+			          		<img src="./portal/img/150ppp/ad_presentation_mode.png" tabindex="0" alt="">
+							<span id="span_39">&nbsp;   Presentation Mode</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option51" class="Settings-option selectable" onclick="createADVolume()">
+			          		<img src="./portal/img/150ppp/volume.png" tabindex="0" alt="">
+							<span id="span_40">&nbsp;   Volume</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option52" class="Settings-option selectable" onclick="createADLang()">
+			          		<img src="./portal/img/150ppp/language.png" tabindex="0" alt="">
+							<span id="span_19_4">&nbsp;   Language</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div id="lvl2option53" class="Settings-option selectable" onclick="createADSpeed()">
+			          		<img src="./portal/img/150ppp/indicator.png" tabindex="0" alt="">
+							<span id="span_40_1">&nbsp;   Extended AD Rate</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option null">
+							<span>&nbsp;</span>
+						</div>
+		          	</div>
+		          	<div class="container-12">
+		          		<div class="Settings-option selectable back" onclick="backSettingsMenu2(5)">
+			          		<img src="./portal/img/settings/back.png" tabindex="0" alt="">
+							<span id="span_41">Back</span>
+						</div>
+		          	</div>
+				</div>
+          	</div>
+        </div>
+	</section>
+
+	<!-- Footer -->
+	<footer>
+		<div class="FooterBar">
+			<div class="FooterBar-container container">
+				<!-- Partners list -->
+				<div class="Footer-partners">
+					 
+					
+					
+					<div class="container-8">
+						<div class="Footer-text container-12">
+							<div class="container-80">
+								<p><span id="span_48">This project has received funding from the European Union’s Horizon 2020 Research and Innovation Programme under grant agreement No 870610 for the <a href="https://www.traction-project.eu/"> TRACTION project </a>.</span></p>
+							</div>
+							<!-- European Commission -->
+							<div class="container-20">
+								<a href="https://ec.europa.eu/commission/index_en" target="_blank">
+									<img title="European Commission" src="./portal/img/logos/EU-flag-150x150.png" alt="EU">
+								</a>
+							</div>	
+						</div>
+						
+						
+			      		<!-- Help button -->
+						<!--div class="Footer-options container-4">
+							<div class="Footer-links">
+				      			<a href="./help.html">
+									<img src="img/iconos_footer/help.png" alt="help icon">
+									<span>Help</span>
+				      			</a>
+				      		</div>
+      					</div-->
+			      		<!-- ImAc project website link -->
+						<div class="Footer-options container-4">
+							<div class="Footer-links">
+				      			<a href="https://cordis.europa.eu/project/id/761974" target="_blank">
+				      				<img src="./portal/img/iconos_footer/web.png" alt="website icon">
+				      				<span>Based on the ImAc player</span>
+				      			</a>          
+				      		</div>
+			      		</div>
+					</div>
+				</div>
+				<!--/br-->
+
+				<!-- Partners list -->
+				
+			</div>
+		</div>
+	</footer> 
+</body>	
+</html>

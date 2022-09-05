@@ -15,16 +15,15 @@ The documentation is available here: https://traction-project.github.io/Immersiv
 Needed for installation:
 
 <ul>
-    <li> Apache Tomcat </li>
-    <li> Apache HTTP Server for DASH content </li>
+    <li>Apache Tomcat</li>
 </ul>
 
-How to use run the player in Apache Tomcat:
+How to use run the player in Apache Tomcat (some steps may vary using XAMPP for Windows):
 
 * Run C:\apache-tomcat\bin\startup.bat
 * Open C:\apache-tomcat\webapps folder
-* Copy traction_player folder into webapps folder
-* Open a browser and type: "your_apache_server_address"/traction_player/
+* Copy the ImmersiveAdaptivePlayer folder into webapps folder
+* Open a browser and type: "your_apache_server_address:portnumber"/ImmersiveAdaptivePlayer/
 
 
 ## Built With
@@ -40,3 +39,7 @@ How to use run the player in Apache Tomcat:
 Based on the ImAc Player - github.com/ua-i2cat/ImAc
 
 > M. Montagud, I. Fraile, E. Meyerson, M. Genís, S. Fernández, “ImAc Player: Enabling a Personalized Consumption of Accessible Immersive Content”, ACM TVX 2019, Manchester (UK), June 2019
+
+Please, also cite us:
+
+> A. A. Simiscuka, M. A. Togou, R. Verma, M. Zorrilla, N. E. O'Connor and G. -M. Muntean, "An Evaluation of 360° Video and Audio Quality in an Artistic-Oriented Platform," 2022 IEEE International Symposium on Broadband Multimedia Systems and Broadcasting (BMSB), 2022, pp. 1-5, doi: 10.1109/BMSB55706.2022.9828745.

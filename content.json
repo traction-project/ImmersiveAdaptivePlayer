@@ -1,0 +1,56 @@
+{
+  "title": "ImAc",
+  "contents": [ 
+{
+    "name": "Title of the piece",
+    "poster": "http://localhost:8080/ImmersiveAdaptivePlayer/content/poster.png",
+    "thumbnail": "http://localhost:8080/ImmersiveAdaptivePlayer/content/thumbnail.jpg",
+    "description": "Performance of the...",
+    "descriptionArray": [
+    {
+      "de": "Aufführung der Oper...",
+      "ca": "Representació de l'òpera ...",
+      "es": "Representación de la ópera ...",
+      "en": "Performance of the ..."
+    }],
+    "acces": [
+    {
+      "ST": ["en", "es", "de", "ca"],
+      "SL": ["en", "es", "de", "ca"], 
+      "AD": ["en", "es"],
+      "AST": ["en", "es"]
+    }],
+    "language": "French",
+    "duration": "2:50",
+    "url": "http://localhost:8080/ImmersiveAdaptivePlayer/content/VIDEO_A/stream.mpd",
+    "audioChannels": 4,
+    "subtitles": [{}]
+  },
+{
+    "name": "Title of the piece",
+    "poster": "http://localhost:8080/ImmersiveAdaptivePlayer/content/poster.png",
+    "thumbnail": "http://localhost:8080/ImmersiveAdaptivePlayer/content/thumbnail.jpg",
+    "description": "Performance of the ...",
+    "descriptionArray": [
+    {
+      "de": "Aufführung der Oper...",
+      "ca": "Representació de l'òpera ...",
+      "es": "Representación de la ópera ...",
+      "en": "Performance of the ..."
+    }],
+    "acces": [
+    {
+      "ST": ["en", "es", "de", "ca"],
+      "SL": ["en", "es", "de", "ca"], 
+      "AD": ["en", "es"],
+      "AST": ["en", "es"]
+    }],
+    "language": "French",
+    "duration": "2:50",
+    "url": "http://localhost:8080/ImmersiveAdaptivePlayer/content/VIDEO_B/stream.mpd",
+    "audioChannels": 4,
+    "subtitles": [{}]
+  }
+
+  ]
+}
