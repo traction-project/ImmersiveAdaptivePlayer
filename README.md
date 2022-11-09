@@ -14,9 +14,7 @@ The documentation is available here: https://traction-project.github.io/Immersiv
 
 Needed for installation:
 
-<ul>
-    <li>Apache Tomcat</li>
-</ul>
+* Apache Tomcat
 
 How to use run the player with Apache Tomcat (some steps and directories may vary using XAMPP for Windows):
 
